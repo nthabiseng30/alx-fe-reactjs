@@ -11,3 +11,5 @@ function UserDetails() {
     </div>
   );
 }
+
+export default UserDetails;

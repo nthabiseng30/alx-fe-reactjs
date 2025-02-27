@@ -7,7 +7,7 @@ export default function MainContent(){
       padding: '20px',
       fontSize: '18px'
     }}>
-      <p>I love to visit New YorK, Paris, and San Francisco.</p>
+      <p>I love to visit New YorK, Paris, and Tokyo.</p>
     </main>
   );
 };

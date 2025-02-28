@@ -1,13 +1,13 @@
 // App.jsx
 import React from 'react';
-import { UserProvider } from './UserContext';
+import UserContext from './UserContext';
 import UserProfile from './UserProfile';
 
 function App() {
   return (
-    <UserProvider>
+    <UserContext.Provider value={{ name: 'Jane Doe', email: 'jane.doe@example.com' }}>
       <UserProfile />
-    </UserProvider>
+    </UserContext.Provider>
   );
 }
 

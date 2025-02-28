@@ -1,3 +1,4 @@
+// App.jsx
 import React from 'react';
 import { UserProvider } from './UserContext';
 import UserProfile from './UserProfile';

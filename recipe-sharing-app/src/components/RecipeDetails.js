@@ -1,5 +1,7 @@
-// RecipeDetails component
-import { useRecipeStore } from './recipeStore';
+import React from 'react';
+import { useRecipeStore } from '../recipeStore';
+import EditRecipeForm from './EditRecipeForm';
+import DeleteRecipeButton from './DeleteRecipeButton';
 
 const RecipeDetails = ({ recipeId }) => {
   const recipe = useRecipeStore(state => state.recipes.find(recipe => recipe.id === recipeId));
@@ -8,7 +10,8 @@ const RecipeDetails = ({ recipeId }) => {
     <div>
       <h1>{recipe.title}</h1>
       <p>{recipe.description}</p>
-      {/* Render EditRecipeForm and DeleteRecipeButton here */}
+      <EditRecipeForm recipeId={recipeId} />
+      <DeleteRecipeButton recipeId={recipeId} />
     </div>
   );
 };

@@ -3,28 +3,25 @@ import { createContext, useReducer } from 'react';
 // Define the initial state
 const initialState = {
   recipes: [],
-  selectedRecipe: null,
 };
 
 // Define the reducer function
 const recipeReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_RECIPE':
+    case 'addRecipe':
       return { ...state, recipes: [...state.recipes, action.recipe] };
-    case 'DELETE_RECIPE':
-      return {
-        ...state,
-        recipes: state.recipes.filter(recipe => recipe.id !== action.id),
-      };
-    case 'EDIT_RECIPE':
+    case 'updateRecipe':
       return {
         ...state,
         recipes: state.recipes.map(recipe =>
           recipe.id === action.id ? { ...recipe, ...action.changes } : recipe
         ),
       };
-    case 'SELECT_RECIPE':
-      return { ...state, selectedRecipe: action.recipe };
+    case 'deleteRecipe':
+      return {
+        ...state,
+        recipes: state.recipes.filter(recipe => recipe.id !== action.id),
+      };
     default:
       return state;
   }

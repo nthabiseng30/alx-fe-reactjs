@@ -1,17 +1,16 @@
-import React from 'react';
-import { useRecipeStore } from '../recipeStore';
-import EditRecipeForm from './EditRecipeForm';
-import DeleteRecipeButton from './DeleteRecipeButton';
+import React, { useContext } from 'react';
+import { RecipeContext } from './recipeStore';
 
-const RecipeDetails = ({ recipeId }) => {
-  const recipe = useRecipeStore(state => state.recipes.find(recipe => recipe.id === recipeId));
+const RecipeDetails = () => {
+  const { state } = useContext(RecipeContext);
+  const recipeId = window.location.pathname.split('/').pop();
+  const recipe = state.recipes.find(recipe => recipe.id === recipeId);
 
   return (
     <div>
-      <h1>{recipe.title}</h1>
+      <h2>Recipe Details</h2>
+      <h3>{recipe.title}</h3>
       <p>{recipe.description}</p>
-      <EditRecipeForm recipeId={recipeId} />
-      <DeleteRecipeButton recipeId={recipeId} />
     </div>
   );
 };

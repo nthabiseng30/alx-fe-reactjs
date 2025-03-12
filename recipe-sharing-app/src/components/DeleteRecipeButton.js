@@ -1,15 +1,18 @@
-// DeleteRecipeButton component
-import { useRecipeStore } from './recipeStore';
+import React, { useContext } from 'react';
+import { RecipeContext } from './recipeStore';
 
-const DeleteRecipeButton = ({ recipeId }) => {
-  const deleteRecipe = useRecipeStore(state => state.deleteRecipe);
+const DeleteRecipeButton = () => {
+  const { dispatch } = useContext(RecipeContext);
+  const recipeId = window.location.pathname.split('/').pop();
 
-  const handleClick = () => {
-    deleteRecipe(recipeId);
+  const handleDelete = () => {
+    dispatch({ type: 'deleteRecipe', id: recipeId });
   };
 
   return (
-    <button onClick={handleClick}>Delete Recipe</button>
+    <div>
+      <button onClick={handleDelete}>Delete Recipe</button>
+    </div>
   );
 };
 

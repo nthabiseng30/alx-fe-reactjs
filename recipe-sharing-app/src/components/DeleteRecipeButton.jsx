@@ -1,12 +1,16 @@
-import React, { useContext } from 'react';
-import { RecipeContext } from './recipeStore';
+// src/components/DeleteRecipeButton.jsx
+import React from 'react';
+import { useRecipeStore } from './recipeStore';
+import { useNavigate } from 'react-router-dom';
 
 const DeleteRecipeButton = () => {
-  const { dispatch } = useContext(RecipeContext);
+  const { deleteRecipe } = useRecipeStore();
+  const navigate = useNavigate();
   const recipeId = window.location.pathname.split('/').pop();
 
   const handleDelete = () => {
-    dispatch({ type: 'deleteRecipe', id: recipeId });
+    deleteRecipe(recipeId);
+    navigate('/recipes'); // Navigate to a different page after deleting the recipe
   };
 
   return (

@@ -1,20 +1,17 @@
-import React, { useContext, useState } from 'react';
-import { RecipeContext } from './recipeStore';
+// src/components/EditRecipeForm.jsx
+import React, { useState } from 'react';
+import { useRecipeStore } from './recipeStore';
 
 const EditRecipeForm = () => {
-  const { state, dispatch } = useContext(RecipeContext);
+  const { state, updateRecipe } = useRecipeStore();
   const recipeId = window.location.pathname.split('/').pop();
   const recipe = state.recipes.find(recipe => recipe.id === recipeId);
   const [title, setTitle] = useState(recipe.title);
   const [description, setDescription] = useState(recipe.description);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch({
-      type: 'updateRecipe',
-      id: recipeId,
-      changes: { title, description },
-    });
+  const handleSubmit = event => {
+    event.preventDefault();
+    updateRecipe({ id: recipeId, changes: { title, description } });
   };
 
   return (
@@ -23,12 +20,19 @@ const EditRecipeForm = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Title:
-          <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
+          <input
+            type="text"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+          />
         </label>
         <br />
         <label>
           Description:
-          <textarea value={description} onChange={e => setDescription(e.target.value)} />
+          <textarea
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+          />
         </label>
         <br />
         <button type="submit">Save Changes</button>
@@ -38,3 +42,4 @@ const EditRecipeForm = () => {
 };
 
 export default EditRecipeForm;
+

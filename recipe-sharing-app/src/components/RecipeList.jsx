@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecipeStore } from '../stores/recipeStore';
 import { Link } from 'react-router-dom';
 
@@ -8,9 +8,9 @@ const RecipeList = () => {
   return (
     <div>
       <h2>Recipe List</h2>
-      {state.recipes && (
+      {state.filteredRecipes && (
         <ul>
-          {state.recipes.map(recipe => (
+          {state.filteredRecipes.map(recipe => (
             <li key={recipe.id}>
               <Link to={`/recipes/${recipe.id}`}>
                 <h3>{recipe.title}</h3>

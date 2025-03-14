@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import { RecipeContext } from './recipeStore';
+// src/components/RecipeDetails.jsx
+import React from 'react';
+import { useRecipeStore } from './recipeStore';
 
 const RecipeDetails = () => {
-  const { state } = useContext(RecipeContext);
+  const { state } = useRecipeStore();
   const recipeId = window.location.pathname.split('/').pop();
   const recipe = state.recipes.find(recipe => recipe.id === recipeId);
 

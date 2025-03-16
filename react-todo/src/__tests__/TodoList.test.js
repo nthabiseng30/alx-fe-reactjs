@@ -3,17 +3,14 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import TodoList from '../TodoList';
 
-test('toggles todo completion', () => {
+test('deletes todo', () => {
   render(<TodoList />);
   const todo = screen.getByText('Buy milk');
+  const deleteButton = screen.getByText('Delete');
 
-  expect(todo).not.toHaveStyle('textDecoration: line-through');
+  expect(todo).toBeInTheDocument();
 
-  fireEvent.click(todo);
+  fireEvent.click(deleteButton);
 
-  expect(todo).toHaveStyle('textDecoration: line-through');
-
-  fireEvent.click(todo);
-
-  expect(todo).not.toHaveStyle('textDecoration: line-through');
+  expect(todo).not.toBeInTheDocument();
 });

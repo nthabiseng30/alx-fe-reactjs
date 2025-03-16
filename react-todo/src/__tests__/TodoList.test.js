@@ -1,11 +1,15 @@
 // src/__tests__/TodoList.test.js
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import TodoList from '../TodoList';
 
-test('renders initial todos', () => {
+test('adds new todo', () => {
   render(<TodoList />);
-  expect(screen.getByText('Buy milk')).toBeInTheDocument();
-  expect(screen.getByText('Walk the dog')).toBeInTheDocument();
-  expect(screen.getByText('Do laundry')).toBeInTheDocument();
+  const input = screen.getByPlaceholderText('Add new todo');
+  const button = screen.getByText('Add Todo');
+
+  fireEvent.change(input, { target: { value: 'New todo' } });
+  fireEvent.click(button);
+
+  expect(screen.getByText('New todo')).toBeInTheDocument();
 });

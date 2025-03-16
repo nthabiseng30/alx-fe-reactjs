@@ -1,4 +1,4 @@
-// TodoList.js
+// src/components/TodoList.js
 import React, { useState } from 'react';
 import AddTodoForm from './AddTodoForm';
 
@@ -30,7 +30,6 @@ const TodoList = () => {
   return (
     <div>
       <h1>Todo List</h1>
-      <AddTodoForm addTodo={addTodo} />
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
@@ -46,6 +45,7 @@ const TodoList = () => {
           </li>
         ))}
       </ul>
+      <AddTodoForm addTodo={addTodo} />
     </div>
   );
 };

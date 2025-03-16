@@ -1,54 +1,49 @@
-// src/components/TodoList.js
-import React, { useState } from 'react';
-import AddTodoForm from './AddTodoForm';
+import React from 'react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import TodoList from './TodoList';
 
-const initialTodos = [
-  { id: 1, text: 'Buy milk', completed: false },
-  { id: 2, text: 'Walk the dog', completed: true },
-  { id: 3, text: 'Do laundry', completed: false },
-];
+test('renders initial todos', () => {
+  render(<TodoList />);
+  expect(screen.getByText('Buy milk')).toBeInTheDocument();
+  expect(screen.getByText('Walk the dog')).toBeInTheDocument();
+  expect(screen.getByText('Do laundry')).toBeInTheDocument();
+});
 
-const TodoList = () => {
-  const [todos, setTodos] = useState(initialTodos);
+test('adds new todo', () => {
+  render(<TodoList />);
+  const input = screen.getByPlaceholderText('Add new todo');
+  const button = screen.getByText('Add Todo');
 
-  const addTodo = (newTodo) => {
-    setTodos([...todos, newTodo]);
-  };
+  fireEvent.change(input, { target: { value: 'New todo' } });
+  fireEvent.click(button);
 
-  const toggleTodo = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
-  };
+  expect(screen.getByText('New todo')).toBeInTheDocument();
+});
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+test('toggles todo completion', () => {
+  render(<TodoList />);
+  const todo = screen.getByText('Buy milk');
 
-  return (
-    <div>
-      <h1>Todo List</h1>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <span
-              style={{
-                textDecoration: todo.completed ? 'line-through' : 'none',
-              }}
-              onClick={() => toggleTodo(todo.id)}
-            >
-              {todo.text}
-            </span>
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-      <AddTodoForm addTodo={addTodo} />
-    </div>
-  );
-};
+  expect(todo).not.toHaveStyle('textDecoration: line-through');
 
-export default TodoList;
+  fireEvent.click(todo);
+
+  expect(todo).toHaveStyle('textDecoration: line-through');
+
+  fireEvent.click(todo);
+
+  expect(todo).not.toHaveStyle('textDecoration: line-through');
+});
+
+test('deletes todo', () => {
+  render(<TodoList />);
+  const todo = screen.getByText('Buy milk');
+  const deleteButton = screen.getByText('Delete');
+
+  expect(todo).toBeInTheDocument();
+
+  fireEvent.click(deleteButton);
+
+  expect(todo).not.toBeInTheDocument();
+});
 

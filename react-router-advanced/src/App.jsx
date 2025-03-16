@@ -1,18 +1,16 @@
-// App.jsx
+// BlogPost.jsx
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Profile from './Profile';
-import BlogPost from './BlogPost';
+import { useParams } from 'react-router-dom';
 
-const App = () => {
+const BlogPost = () => {
+  const { id } = useParams();
+
+  // Use the id parameter to fetch the blog post data
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/profile/*" element={<Profile />} />
-        <Route path="/blog/:postId" element={<BlogPost />} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <h1>Blog Post {id}</h1>
+    </div>
   );
 };
 
-export default App;
+export default BlogPost;

@@ -1,6 +1,6 @@
 // App.jsx
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Profile from './Profile';
 import BlogPost from './BlogPost';
 

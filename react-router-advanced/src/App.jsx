@@ -1,15 +1,23 @@
 // App.jsx
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Profile from './Profile';
-import BlogPost from './BlogPost';
+import ProtectedRoute from './components/ProtectedRoute';
+import Profile from './components/Profile';
+import Login from './components/Login';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/profile/*" element={<Profile />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

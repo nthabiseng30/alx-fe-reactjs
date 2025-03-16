@@ -1,6 +1,6 @@
 // PostsComponent.jsx
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 const fetchPosts = async () => {
   const response = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -9,6 +9,11 @@ const fetchPosts = async () => {
 
 const PostsComponent = () => {
   const { data, error, isLoading, isError } = useQuery('posts', fetchPosts);
+  const queryClient = useQueryClient();
+
+  const handleRefetch = () => {
+    queryClient.invalidateQueries('posts');
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -26,8 +31,11 @@ const PostsComponent = () => {
           <li key={post.id}>{post.title}</li>
         ))}
       </ul>
+      <button onClick={handleRefetch}>Refetch Posts</button>
     </div>
   );
 };
 
 export default PostsComponent;
+
+

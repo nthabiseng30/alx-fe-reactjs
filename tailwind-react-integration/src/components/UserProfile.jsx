@@ -1,36 +1,13 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
-import UserProfile from './components/UserProfile'; // Import the UserProfile component
+import React from 'react';
 
-function App() {
-  const [count, setCount] = useState(0);
+function UserProfile() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <UserProfile /> {/* Render the UserProfile component */}
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="user-profile bg-gray-100 p-8 max-w-sm mx-auto my-20 rounded-lg shadow-lg">
+      <img src="https://via.placeholder.com/150" alt="User" />
+      <h1>John Doe</h1>
+      <p>Developer at Example Co. Loves to write code and explore new technologies.</p>
+    </div>
   );
 }
 
-export default App;
+export default UserProfile;

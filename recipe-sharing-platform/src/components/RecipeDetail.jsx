@@ -17,7 +17,7 @@ function RecipeDetail() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       {recipe && (
-        <div>
+        <div className="bg-white rounded shadow-md p-4">
           <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
           <img
             src={recipe.image}
@@ -41,4 +41,3 @@ function RecipeDetail() {
 }
 
 export default RecipeDetail;
-

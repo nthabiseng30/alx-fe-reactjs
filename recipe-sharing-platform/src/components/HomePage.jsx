@@ -14,8 +14,15 @@ function HomePage() {
       <h1 className="text-3xl font-bold mb-4">Recipe Sharing Platform</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {recipes.map(recipe => (
-          <div key={recipe.id} className="bg-white rounded shadow-md p-4">
-            <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover mb-4" />
+          <div
+            key={recipe.id}
+            className="bg-white rounded shadow-md p-4 hover:shadow-lg hover:scale-105 transition duration-300 ease-in-out"
+          >
+            <img
+              src={recipe.image}
+              alt={recipe.title}
+              className="w-full h-48 object-cover mb-4 rounded"
+            />
             <h2 className="text-lg font-bold mb-2">{recipe.title}</h2>
             <p className="text-gray-600">{recipe.summary}</p>
           </div>
@@ -26,3 +33,4 @@ function HomePage() {
 }
 
 export default HomePage;
+

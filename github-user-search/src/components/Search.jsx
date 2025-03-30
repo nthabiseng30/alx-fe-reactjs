@@ -8,21 +8,14 @@ function Search() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
 
   const handleSearch = async (event) => {
     event.preventDefault();
     setLoading(true);
     setErrorMessage(null);
-    const query = login:${searchQuery} location:${location} repos:>=${minRepos};
     try {
-      const userData = await fetchUserData(query, pageNumber);
-      if (userData.items.length === 0) {
-        setErrorMessage("Looks like we can't find the user.");
-        setSearchResults([]);
-      } else {
-        setSearchResults(userData.items);
-      }
+      const userData = await fetchUserData(searchQuery, location, minRepos);
+      setSearchResults(userData.items);
     } catch (error) {
       setErrorMessage("An error occurred while searching for users.");
     } finally {
@@ -30,46 +23,43 @@ function Search() {
     }
   };
 
-  const handleLoadMore = async () => {
-    setPageNumber(pageNumber + 1);
-    const query = login:${searchQuery} location:${location} repos:>=${minRepos};
-    try {
-      const userData = await fetchUserData(query, pageNumber + 1);
-      setSearchResults([...searchResults, ...userData.items]);
-    } catch (error) {
-      setErrorMessage("Failed to load more results.");
-    }
-  };
-
   return (
-    <div>
-      <h1>GitHub User Search</h1>
-      <form onSubmit={handleSearch}>
-        <label>
-          Search by username:
+    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
+      <h1 className="text-lg font-bold mb-4">GitHub User Search</h1>
+      <form onSubmit={handleSearch} className="flex flex-col space-y-4">
+        <label className="block">
+          <span className="block text-sm font-medium mb-2">Search by username:</span>
           <input
             type="text"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
+            className="block w-full p-2 pl-10 text-sm text-gray-700 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
           />
         </label>
-        <label>
-          Location:
+        <label className="block">
+          <span className="block text-sm font-medium mb-2">Location:</span>
           <input
             type="text"
             value={location}
             onChange={(event) => setLocation(event.target.value)}
+            className="block w-full p-2 pl-10 text-sm text-gray-700 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
           />
         </label>
-        <label>
-          Minimum repositories:
+        <label className="block">
+          <span className="block text-sm font-medium mb-2">Minimum repositories:</span>
           <input
             type="number"
             value={minRepos}
             onChange={(event) => setMinRepos(event.target.value)}
+            className="block w-full p-2 pl-10 text-sm text-gray-700 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
           />
         </label>
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Search
+        </button>
       </form>
       {loading ? (
         <p>Loading...</p>
@@ -92,9 +82,6 @@ function Search() {
               </li>
             ))}
           </ul>
-          {searchResults.length >= 30 && (
-            <button onClick={handleLoadMore}>Load More</button>
-          )}
         </div>
       ) : (
         <p>No results found.</p>
@@ -104,6 +91,4 @@ function Search() {
 }
 
 export default Search;
-
-
 

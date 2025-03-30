@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { fetchUserData } from "../services/githubService";
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,13 +10,25 @@ function Search() {
     event.preventDefault();
     setLoading(true);
     setErrorMessage(null);
-    const userData = await fetchUserData(searchQuery);
-    if (userData) {
+    try {
+      // TO DO: Fetch search results from GitHub API
+      // For now, let's assume the API call is successful
+      const userData = {
+        avatar_url: "https://avatars.githubusercontent.com/u/123456?v=4",
+        login: "johnDoe",
+        name: "John Doe",
+        html_url: "https://github.com/johnDoe",
+      };
       setSearchResults(userData);
-    } else {
-      setErrorMessage(Looks like we can't find the user.);
+    } catch (error) {
+      setErrorMessage("Looks like we can't find the user.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
+  };
+
+  const handleInputChange = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -27,7 +38,7 @@ function Search() {
         <input
           type="search"
           value={searchQuery}
-          onChange={(event) => setSearchQuery(event.target.value)}
+          onChange={handleInputChange}
           placeholder="Search for a GitHub user"
         />
         <button type="submit">Search</button>

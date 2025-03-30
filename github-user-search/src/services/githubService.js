@@ -10,10 +10,10 @@ const apiClient = axios.create({
   },
 });
 
-const fetchUserData = async (username) => {
+const fetchUserData = async (query) => {
   try {
-    const response = await apiClient.get(`/users/${username}`);
-    return response.data;
+    const response = await apiClient.get(`/search/users?q=${query}`);
+    return response.data.items;
   } catch (error) {
     console.error(error);
   }

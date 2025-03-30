@@ -17,9 +17,14 @@ function Search() {
     const query = `login:${searchQuery} location:${location} repos:>=${minRepos}`;
     try {
       const userData = await fetchUserData(query, pageNumber);
-      setSearchResults(userData.items);
+      if (userData.items.length === 0) {
+        setErrorMessage("Looks like we can't find the user.");
+        setSearchResults([]); // Clear search results
+      } else {
+        setSearchResults(userData.items);
+      }
     } catch (error) {
-      setErrorMessage("Looks like we can't find the user.");
+      setErrorMessage("An error occurred while searching for users.");
     } finally {
       setLoading(false);
     }
@@ -75,7 +80,5 @@ function Search() {
 }
 
 export default Search;
-
-
 
 

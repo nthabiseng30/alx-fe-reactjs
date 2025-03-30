@@ -1,16 +1,23 @@
 import React, { useState } from "react";
+import { fetchUserData } from "../services/githubService";
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSearch = (event) => {
+  const handleSearch = async (event) => {
     event.preventDefault();
-    // TO DO: Fetch search results from GitHub API
-  };
-
-  const handleInputChange = (event) => {
-    setSearchQuery(event.target.value);
+    setLoading(true);
+    setError(false);
+    const userData = await fetchUserData(searchQuery);
+    if (userData) {
+      setSearchResults(userData);
+    } else {
+      setError(true);
+    }
+    setLoading(false);
   };
 
   return (
@@ -20,15 +27,30 @@ function Search() {
         <input
           type="search"
           value={searchQuery}
-          onChange={handleInputChange}
+          onChange={(event) => setSearchQuery(event.target.value)}
           placeholder="Search for a GitHub user"
         />
         <button type="submit">Search</button>
       </form>
-      {/* TO DO: Display search results */}
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Looks like we can't find the user.</p>
+      ) : searchResults ? (
+        <div>
+          <img src={searchResults.avatar_url} alt={searchResults.login} />
+          <h2>{searchResults.name}</h2>
+          <p>
+            <a href={searchResults.html_url} target="_blank">
+              View {searchResults.login}'s GitHub profile
+            </a>
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }
 
 export default Search;
+
 

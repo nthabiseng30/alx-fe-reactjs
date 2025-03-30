@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+// src/components/Search.jsx
+import React, { useState } from 'react';
 
 function Search() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [location, setLocation] = useState("");
-  const [minRepos, setMinRepos] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [location, setLocation] = useState('');
+  const [minRepos, setMinRepos] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -19,7 +19,7 @@ function Search() {
       const userData = await fetchUserData(query, pageNumber);
       if (userData.items.length === 0) {
         setErrorMessage("Looks like we can't find the user.");
-        setSearchResults([]); // Clear search results
+        setSearchResults([]);
       } else {
         setSearchResults(userData.items);
       }
@@ -45,7 +45,31 @@ function Search() {
     <div>
       <h1>GitHub User Search</h1>
       <form onSubmit={handleSearch}>
-        {/* ... */}
+        <label>
+          Search by username:
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+          />
+        </label>
+        <label>
+          Location:
+          <input
+            type="text"
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
+          />
+        </label>
+        <label>
+          Minimum repositories:
+          <input
+            type="number"
+            value={minRepos}
+            onChange={(event) => setMinRepos(event.target.value)}
+          />
+        </label>
+        <button type="submit">Search</button>
       </form>
       {loading ? (
         <p>Loading...</p>

@@ -5,9 +5,10 @@ const apiClient = axios.create({
   baseURL: 'https://api.github.com',
 });
 
-const fetchUserData = async (query, pageNumber) => {
+const fetchUserData = async (searchQuery, location, minRepos) => {
   try {
-    const response = await apiClient.get(`/search/users?q=${query}&page=${pageNumber}`);
+    const query = `login:${searchQuery}+location:${location}+repos:>=${minRepos}`;
+    const response = await apiClient.get(`search/users?q=${query}`);
     return response.data;
   } catch (error) {
     throw error;

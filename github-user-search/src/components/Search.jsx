@@ -1,6 +1,5 @@
 // src/components/Search.jsx
 import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -15,7 +14,7 @@ function Search() {
     event.preventDefault();
     setLoading(true);
     setErrorMessage(null);
-    const query = `login:${searchQuery} location:${location} repos:>=${minRepos}`;
+    const query = login:${searchQuery} location:${location} repos:>=${minRepos};
     try {
       const userData = await fetchUserData(query, pageNumber);
       if (userData.items.length === 0) {
@@ -31,20 +30,14 @@ function Search() {
     }
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case 'searchQuery':
-        setSearchQuery(value);
-        break;
-      case 'location':
-        setLocation(value);
-        break;
-      case 'minRepos':
-        setMinRepos(value);
-        break;
-      default:
-        break;
+  const handleLoadMore = async () => {
+    setPageNumber(pageNumber + 1);
+    const query = login:${searchQuery} location:${location} repos:>=${minRepos};
+    try {
+      const userData = await fetchUserData(query, pageNumber + 1);
+      setSearchResults([...searchResults, ...userData.items]);
+    } catch (error) {
+      setErrorMessage("Failed to load more results.");
     }
   };
 
@@ -56,27 +49,24 @@ function Search() {
           Search by username:
           <input
             type="text"
-            name="searchQuery"
             value={searchQuery}
-            onChange={handleInputChange}
+            onChange={(event) => setSearchQuery(event.target.value)}
           />
         </label>
         <label>
           Location:
           <input
             type="text"
-            name="location"
             value={location}
-            onChange={handleInputChange}
+            onChange={(event) => setLocation(event.target.value)}
           />
         </label>
         <label>
           Minimum repositories:
           <input
             type="number"
-            name="minRepos"
             value={minRepos}
-            onChange={handleInputChange}
+            onChange={(event) => setMinRepos(event.target.value)}
           />
         </label>
         <button type="submit">Search</button>
@@ -102,6 +92,9 @@ function Search() {
               </li>
             ))}
           </ul>
+          {searchResults.length >= 30 && (
+            <button onClick={handleLoadMore}>Load More</button>
+          )}
         </div>
       ) : (
         <p>No results found.</p>
@@ -111,5 +104,6 @@ function Search() {
 }
 
 export default Search;
+
 
 

@@ -15,7 +15,7 @@ function Search() {
     if (userData) {
       setSearchResults(userData);
     } else {
-      setErrorMessage("Looks like we can't find the user.");
+      setErrorMessage(Looks like we can't find the user.);
     }
     setLoading(false);
   };

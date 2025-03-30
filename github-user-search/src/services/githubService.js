@@ -1,19 +1,22 @@
-import { Octokit } from "@octokit/octokit";
+import axios from "axios";
 
-const octokit = new Octokit({
-  auth: import.meta.env.VITE_APP_GITHUB_API_KEY,
+const githubApiUrl = "https://api.github.com";
+const githubToken = import.meta.env.VITE_APP_GITHUB_API_KEY;
+
+const apiClient = axios.create({
+  baseURL: githubApiUrl,
+  headers: {
+    Authorization: `Bearer ${githubToken}`,
+  },
 });
 
-const getUserData = async (username) => {
+const fetchUserData = async (username) => {
   try {
-    const response = await octokit.rest.users.getByUsername({
-      username,
-    });
+    const response = await apiClient.get(`/users/${username}`);
     return response.data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export { getUserData };
-
+export { fetchUserData };

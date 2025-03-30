@@ -1,12 +1,13 @@
 import React from "react";
-import UserProfile from "./components/UserProfile";
+import Search from "./components/Search";
 
 function App() {
   return (
     <div>
-      <UserProfile username="octocat" />
+      <Search />
     </div>
   );
 }
 
 export default App;
+

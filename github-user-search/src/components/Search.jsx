@@ -5,17 +5,17 @@ function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSearch = async (event) => {
     event.preventDefault();
     setLoading(true);
-    setError(null);
+    setErrorMessage(null);
     const userData = await fetchUserData(searchQuery);
     if (userData) {
       setSearchResults(userData);
     } else {
-      setError("Looks like we can't find the user.");
+      setErrorMessage("Looks like we can't find the user.");
     }
     setLoading(false);
   };
@@ -34,8 +34,8 @@ function Search() {
       </form>
       {loading ? (
         <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
+      ) : errorMessage ? (
+        <p>{errorMessage}</p>
       ) : searchResults ? (
         <div>
           <img src={searchResults.avatar_url} alt={searchResults.login} />
@@ -52,5 +52,6 @@ function Search() {
 }
 
 export default Search;
+
 
 

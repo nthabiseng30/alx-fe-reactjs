@@ -1,22 +1,18 @@
-import axios from "axios";
-
-const githubApiUrl = "https://api.github.com";
-const githubToken = import.meta.env.VITE_APP_GITHUB_API_KEY;
+// src/services/githubService.js
+import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: githubApiUrl,
-  headers: {
-    Authorization: `Bearer ${githubToken}`,
-  },
+  baseURL: 'https://api.github.com',
 });
 
-const fetchUserData = async (query) => {
+const fetchUserData = async (query, pageNumber) => {
   try {
-    const response = await apiClient.get(`/search/users?q=${query}`);
-    return response.data.items;
+    const response = await apiClient.get(`/search/users?q=${query}&page=${pageNumber}`);
+    return response.data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };
 
 export { fetchUserData };
+
